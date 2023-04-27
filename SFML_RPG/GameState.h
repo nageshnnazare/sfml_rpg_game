@@ -8,6 +8,7 @@ class GameState : public State
 private:
 	Entity player;
 
+	// init
 	void init_key_binds() override;
 
 public:
@@ -15,9 +16,14 @@ public:
 	virtual ~GameState();
 
 	// Functions
+	// update
 	void update(const float& dt) override;
-	void render(sf::RenderTarget* target = nullptr) override;
 	void update_input(const float& dt) override;
+
+	// render
+	void render(sf::RenderTarget* target = nullptr) override;
+
+	// end
 	void end_state() override;
 };
 

@@ -9,6 +9,9 @@ private:
 
 protected:
 	sf::RenderWindow* window;
+	sf::Vector2i mousePosScreen;
+	sf::Vector2i mousePosWindow;
+	sf::Vector2f mousePosView;
 
 	std::vector<sf::Texture> textures;
 	std::map<std::string, int>* supportedKeys;
@@ -24,6 +27,7 @@ public:
 
 	// Functions
 	virtual void update(const float& dt) = 0;
+	virtual void update_mouse_positions();
 	virtual void render(sf::RenderTarget* target = nullptr) = 0;
 	virtual void update_input(const float& dt) = 0;
 	virtual void end_state() = 0;

@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "GameState.h"
+#include "MainMenuState.h"
 
 class Game
 {	
@@ -25,8 +25,6 @@ public:
 	virtual ~Game();
 
 	// Functions
-	void end_app();
-	
 	// updates
 	void update_SFML_events();
 	void update();
@@ -37,6 +35,7 @@ public:
 	
 	// core
 	void run();
+	void end_app();
 };
 
 #endif

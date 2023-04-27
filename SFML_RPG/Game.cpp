@@ -1,5 +1,22 @@
 #include "Game.h"
 
+Game::Game()
+{
+    this->init_window();
+    this->init_keys();
+    this->init_states();
+
+}
+
+Game::~Game()
+{
+    delete this->window;
+    while (!this->states.empty()) {
+        delete this->states.top();
+        this->states.pop();
+    }
+}
+
 void Game::init_window()
 {
     std::ifstream ifs("Configs/window.ini");
@@ -39,29 +56,7 @@ void Game::init_keys()
 
 void Game::init_states()
 {
-    this->states.push(new GameState(this->window, &this->supportedKeys));
-}
-
-Game::Game()
-{
-    this->init_window();
-    this->init_keys();
-    this->init_states();
-    
-}
-
-Game::~Game()
-{
-	delete this->window;
-    while (!this->states.empty()) {
-        delete this->states.top();
-        this->states.pop();
-    }
-}
-
-void Game::end_app()
-{
-
+    this->states.push(new MainMenuState(this->window, &this->supportedKeys));
 }
 
 // Functions
@@ -119,4 +114,9 @@ void Game::run()
         this->update();
         this->render();
     }
+}
+
+void Game::end_app()
+{
+    std::cout << "Closing Application..." << std::endl;
 }

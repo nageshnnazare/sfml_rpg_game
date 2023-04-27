@@ -36,8 +36,6 @@ public:
 	virtual void render(sf::RenderTarget* target);
 
 	void move(const float& dt, const float dir_x, const float dir_y);
-
-	void blank();
 };
 
 #endif	

@@ -27,17 +27,10 @@ void GameState::init_key_binds()
 
 void GameState::update(const float& dt)
 {
+	this->update_mouse_positions();
 	this->update_input(dt);
 
 	this->player.update(dt);
-}
-
-void GameState::render(sf::RenderTarget* target)
-{
-	if (!target) {
-		target = this->window;
-	}
-	this->player.render(target);
 }
 
 void GameState::update_input(const float& dt)
@@ -56,6 +49,14 @@ void GameState::update_input(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds.at("MOVE_DOWN")))) {
 		this->player.move(dt, 0.f, 1.f);
 	}
+}
+
+void GameState::render(sf::RenderTarget* target)
+{
+	if (!target) {
+		target = this->window;
+	}
+	this->player.render(target);
 }
 
 void GameState::end_state()
