@@ -7,7 +7,7 @@ MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int
 	this->init_key_binds();
 	this->init_buttons();
 
-	this->background.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
+	this->background.setSize(sf::Vector2f((float)window->getSize().x, (float)window->getSize().y));
 	this->background.setFillColor(sf::Color::Magenta);
 }
 
