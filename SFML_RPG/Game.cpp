@@ -17,24 +17,49 @@ Game::~Game()
     }
 }
 
+void Game::init_variables()
+{
+    this->window = nullptr;
+
+    this->dt = 0.f;
+    this->fullScreen = false;
+}
+
 void Game::init_window()
 {
     std::ifstream ifs("Configs/window.ini");
+    this->videoModes = sf::VideoMode::getFullscreenModes();
 
     std::string title = "None";
-    sf::VideoMode window_bounds(800, 600);
+    sf::VideoMode window_bounds = sf::VideoMode::getDesktopMode();
+
+    bool full_screen = false;
     unsigned framerate_limit = 120;
     bool vertical_sync_enabled = false;
+    unsigned anti_aliasing_level = 0;
 
     if (ifs.is_open()) {
         std::getline(ifs, title);
         ifs >> window_bounds.width >> window_bounds.height;
+        ifs >> full_screen;
         ifs >> framerate_limit;
         ifs >> vertical_sync_enabled;
+        ifs >> anti_aliasing_level;
     }
     ifs.close();
 
-	this->window = new sf::RenderWindow(window_bounds, title);
+    this->fullScreen = full_screen;
+    this->windowSettings.antialiasingLevel = anti_aliasing_level;
+
+    if (this->fullScreen) {
+        this->window = new sf::RenderWindow(window_bounds, title,
+            sf::Style::Fullscreen, this->windowSettings);
+    }
+    else {
+        this->window = new sf::RenderWindow(window_bounds, title,
+            sf::Style::Titlebar | sf::Style::Close, this->windowSettings);
+    }
+
     this->window->setFramerateLimit(framerate_limit);
     this->window->setVerticalSyncEnabled(vertical_sync_enabled);
 }
@@ -56,7 +81,8 @@ void Game::init_keys()
 
 void Game::init_states()
 {
-    this->states.push(new MainMenuState(this->window, &this->supportedKeys));
+    this->states.push(new MainMenuState(this->window, 
+        &this->supportedKeys, &this->states));
 }
 
 // Functions
@@ -92,7 +118,7 @@ void Game::update()
 void Game::update_dt()
 {
     // Updates the dt variable with the time it takes to update and render one frame    
-    this->dt = this->dtClk.getElapsedTime().asSeconds();
+    this->dt = this->dtClk.restart().asSeconds();
 }
 
 void Game::render()

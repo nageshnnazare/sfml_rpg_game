@@ -1,7 +1,8 @@
 #include "GameState.h"
 
-GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
-	: State(window, supportedKeys)
+GameState::GameState(sf::RenderWindow* window, 
+	std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+	: State(window, supportedKeys, states)
 {
 	this->init_key_binds();
 }
@@ -61,4 +62,5 @@ void GameState::render(sf::RenderTarget* target)
 
 void GameState::end_state()
 {
+	std::cout << "Ending Game State" << std::endl;
 }

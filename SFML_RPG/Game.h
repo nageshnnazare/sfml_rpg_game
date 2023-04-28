@@ -9,13 +9,17 @@ private:
 	sf::RenderWindow* window;
 	sf::Event sfEvent;
 	sf::Clock dtClk;
+	sf::ContextSettings windowSettings;
 
 	std::stack<State*> states;
 	std::map<std::string, int> supportedKeys;
+	std::vector<sf::VideoMode> videoModes;
 
 	float dt;
+	bool fullScreen;
 
 	// Init funcs
+	void init_variables();
 	void init_window();
 	void init_keys();
 	void init_states();

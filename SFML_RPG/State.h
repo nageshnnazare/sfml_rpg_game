@@ -13,6 +13,7 @@ protected:
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
 
+	std::stack<State*>* states;
 	std::vector<sf::Texture> textures;
 	std::map<std::string, int>* supportedKeys;
 	std::map<std::string, int> keyBinds;
@@ -22,7 +23,8 @@ protected:
 	virtual void init_key_binds() = 0;
 
 public:
-	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
+	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys,
+		std::stack<State*>* states);
 	virtual ~State();
 
 	// Functions
@@ -34,7 +36,7 @@ public:
 
 	virtual void check_for_quit();
 
-	const bool& get_quit();
+	const bool& get_quit() const;
 };
 
 #endif

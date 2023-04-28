@@ -8,6 +8,7 @@ class MainMenuState : public State
 {
 private:
 	sf::RectangleShape background;
+	sf::Texture backgroundTexture;
 	sf::Font font;
 
 	//Button* gameStateBtn;
@@ -15,12 +16,16 @@ private:
 	std::map<std::string, Button*> buttons;
 
 	// init
+	void init_variables();
+	void init_background();
 	void init_fonts();
 	void init_key_binds() override;
 	void init_buttons();
 
 public:
-	MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
+	MainMenuState(sf::RenderWindow* window, 
+		std::map<std::string, int>* supportedKeys,
+		std::stack<State*>* states);
 	virtual ~MainMenuState();
 
 	// Functions
