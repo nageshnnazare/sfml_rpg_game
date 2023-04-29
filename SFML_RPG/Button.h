@@ -45,7 +45,7 @@ public:
 	void update(const sf::Vector2f mouse_pos);
 
 	// render
-	void render(sf::RenderTarget* target);
+	void render(sf::RenderTarget& target);
 
 	// accessors
 	const bool isPressed() const;

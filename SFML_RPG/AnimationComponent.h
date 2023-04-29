@@ -42,6 +42,7 @@ private:
 	sf::Texture& textureSheet;
 
 	std::map<std::string, Animation*> animations;
+	Animation* lastAnimation;
 
 public:
 	AnimationComponent(sf::Sprite& sprite, sf::Texture& texture_sheet);
@@ -50,9 +51,6 @@ public:
 	void add_animation(const std::string key, float animation_timer, 
 		int width, int height, int start_frame_x, int start_frame_y, 
 		int frames_x, int frames_y);
-	//void start_animation(const std::string animation);
-	//void pause_animation(const std::string animation);
-	//void reset_animation(const std::string animation);
 
 	void play(const std::string key, const float& dt);
 };

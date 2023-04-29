@@ -98,6 +98,11 @@ void MainMenuState::update_btns()
 			this->supportedKeys, this->states));
 	}
 
+	if (this->buttons["EDITOR_STATE"]->isPressed()) {
+		this->states->push(new EditorState(this->window,
+			this->supportedKeys, this->states));
+	}
+
 	if (this->buttons["EXIT_STATE"]->isPressed()) {
 		this->end_state();
 	}
@@ -110,7 +115,7 @@ void MainMenuState::render(sf::RenderTarget* target)
 	}
 	target->draw(this->background);	
 
-	this->render_btns(target);
+	this->render_btns(*target);
 
 #ifdef DEBUG
 	sf::Text mouse_text;
@@ -126,7 +131,7 @@ void MainMenuState::render(sf::RenderTarget* target)
 #endif
 }
 
-void MainMenuState::render_btns(sf::RenderTarget* target)
+void MainMenuState::render_btns(sf::RenderTarget& target)
 {
 	for (auto& btn : this->buttons) {
 		btn.second->render(target);
