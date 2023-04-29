@@ -46,4 +46,4 @@ public:
 	const bool isPressed() const;
 };
 
-#endif
+#endif // !BUTTON_H

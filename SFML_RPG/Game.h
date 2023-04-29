@@ -42,4 +42,4 @@ public:
 	void end_app();
 };
 
-#endif
+#endif // !GAME_H

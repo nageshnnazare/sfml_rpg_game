@@ -6,14 +6,16 @@
 class GameState : public State
 {
 private:
-	Entity player;
+	Player* player;
 
 	// init
 	void init_key_binds() override;
+	void init_textures();
+	void init_players();
 
 public:
 	GameState(sf::RenderWindow* window, 
-		std::map<std::string, int>* supportedKeys,
+		std::map<std::string, int>* supported_keys,
 		std::stack<State*>* states);
 	virtual ~GameState();
 
@@ -25,8 +27,6 @@ public:
 	// render
 	void render(sf::RenderTarget* target = nullptr) override;
 
-	// end
-	void end_state() override;
 };
 
-#endif
+#endif // !GAME_STATE_H

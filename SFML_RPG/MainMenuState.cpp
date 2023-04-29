@@ -1,8 +1,8 @@
 #include "MainMenuState.h"
 
 MainMenuState::MainMenuState(sf::RenderWindow* window, 
-	std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	: State(window, supportedKeys, states)
+	std::map<std::string, int>* supported_keys, std::stack<State*>* states)
+	: State(window, supported_keys, states)
 {
 	this->init_variables();
 	this->init_background();
@@ -13,7 +13,6 @@ MainMenuState::MainMenuState(sf::RenderWindow* window,
 
 MainMenuState::~MainMenuState()
 {
-
 	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it) {
 		delete it->second;
 	}
@@ -79,7 +78,6 @@ void MainMenuState::update(const float& dt)
 
 void MainMenuState::update_input(const float& dt)
 {
-	this->check_for_quit();
 }
 
 void MainMenuState::update_btns()
@@ -94,7 +92,7 @@ void MainMenuState::update_btns()
 	}
 
 	if (this->buttons["EXIT_STATE"]->isPressed()) {
-		this->quit = true;
+		this->end_state();
 	}
 }
 
@@ -126,9 +124,4 @@ void MainMenuState::render_btns(sf::RenderTarget* target)
 	for (auto& btn : this->buttons) {
 		btn.second->render(target);
 	}
-}
-
-void MainMenuState::end_state()
-{
-	std::cout << "Ending Main Menu State" << std::endl;
 }

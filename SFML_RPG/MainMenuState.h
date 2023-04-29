@@ -11,8 +11,6 @@ private:
 	sf::Texture backgroundTexture;
 	sf::Font font;
 
-	//Button* gameStateBtn;
-
 	std::map<std::string, Button*> buttons;
 
 	// init
@@ -24,7 +22,7 @@ private:
 
 public:
 	MainMenuState(sf::RenderWindow* window, 
-		std::map<std::string, int>* supportedKeys,
+		std::map<std::string, int>* supported_keys,
 		std::stack<State*>* states);
 	virtual ~MainMenuState();
 
@@ -38,9 +36,7 @@ public:
 	void render(sf::RenderTarget* target = nullptr) override;
 	void render_btns(sf::RenderTarget* target = nullptr);
 
-	// end
-	void end_state() override;
 };
 
-#endif
+#endif // !MAIN_MENU_H
 
