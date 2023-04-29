@@ -31,14 +31,15 @@ void GameState::init_key_binds()
 
 void GameState::init_textures()
 {
-	if (!this->textures["PLAYER_IDLE"].loadFromFile("Resources/Images/Sprites/Player/sword.png")) {
+	if (!this->textures["PLAYER_SHEET"].loadFromFile(
+		"Resources/Images/Sprites/Player/PLAYER_SHEET.png")) {
 		throw ("Error: game_state - Failed to load player idle sprite\n");
 	}
 }
 
 void GameState::init_players()
 {
-	this->player = new Player(0, 0, this->textures["PLAYER_IDLE"]);
+	this->player = new Player(0, 0, this->textures["PLAYER_SHEET"]);
 }
 
 void GameState::update(const float& dt)

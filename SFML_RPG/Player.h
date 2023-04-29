@@ -12,8 +12,10 @@ private:
 protected:
 
 public:
-	Player(float x, float y, sf::Texture& texture);
+	Player(float x, float y, sf::Texture& texture_sheet);
 	virtual ~Player();
+
+	void update(const float& dt) override;
 };
 
 #endif // !PLAYER_H
