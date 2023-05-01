@@ -51,6 +51,7 @@ public:
 
 	// Access
 	const sf::Vector2f& get_velocity() const;
+	const float& get_max_velocity() const;
 	
 	const bool get_movement_state(MovementStates state) const;
 };

@@ -6,6 +6,8 @@
 class Player : public Entity
 {
 private:
+	bool attacking;
+
 	// init 
 	void init_variables();
 	void init_components();

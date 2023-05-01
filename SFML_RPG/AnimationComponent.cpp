@@ -24,8 +24,9 @@ AnimationComponent::Animation::~Animation()
 {
 }
 
-void AnimationComponent::Animation::play(const float& dt)
+bool AnimationComponent::Animation::play(const float& dt)
 {
+	bool done = false;
 	this->timer += 100.f * dt;
 	if (this->timer >= this->animationTimer) {
 		this->timer = 0.f;
@@ -35,14 +36,38 @@ void AnimationComponent::Animation::play(const float& dt)
 		}
 		else {
 			this->currentRect.left = this->startRect.left;
+			done = true;
 		}
 		this->sprite.setTextureRect(this->currentRect);
 	}
+	return done;
+}
+
+bool AnimationComponent::Animation::play(const float& dt, float mod_percent)
+{
+	bool done = false;
+	if (mod_percent < 0.5f) {
+		mod_percent = 0.5;
+	}
+	this->timer += (mod_percent) * 100.f * dt;
+	if (this->timer >= this->animationTimer) {
+		this->timer = 0.f;
+
+		if (this->currentRect != this->endRect) {
+			this->currentRect.left += this->width;
+		}
+		else {
+			this->currentRect.left = this->startRect.left;
+			done = true;
+		}
+		this->sprite.setTextureRect(this->currentRect);
+	}
+	return done;
 }
 
 void AnimationComponent::Animation::reset()
 {
-	this->timer = 0.f;
+	this->timer = this->animationTimer;
 	this->currentRect = this->startRect;
 }
 
@@ -50,7 +75,8 @@ void AnimationComponent::Animation::reset()
 
 AnimationComponent::AnimationComponent(sf::Sprite& sprite, 
 	sf::Texture& texture_sheet)
-	: sprite(sprite), textureSheet(texture_sheet), lastAnimation(nullptr)
+	: sprite(sprite), textureSheet(texture_sheet), 
+	lastAnimation(nullptr), priorityAnimation(nullptr)
 {
 }
 
@@ -70,14 +96,62 @@ void AnimationComponent::add_animation(const std::string key,
 		frames_x, frames_y);
 }
 
-void AnimationComponent::play(const std::string key, const float& dt)
+void AnimationComponent::play(const std::string key, const float& dt, 
+	const bool priority)
 {
-	if (this->lastAnimation != this->animations[key]) {
-		if (this->lastAnimation) {
-			this->lastAnimation->reset();
+	if (this->priorityAnimation) {
+		if (this->priorityAnimation == this->animations[key]) {
+			if (this->lastAnimation != this->animations[key]) {
+				if (this->lastAnimation) {
+					this->lastAnimation->reset();
+				}
+				this->lastAnimation = this->animations[key];
+			}
+			if (this->animations[key]->play(dt)) {
+				this->priorityAnimation = nullptr;
+			}
 		}
-		this->lastAnimation = this->animations[key];
 	}
+	else {
+		if (priority) {
+			this->priorityAnimation = this->animations[key];
+		}
+		if (this->lastAnimation != this->animations[key]) {
+			if (this->lastAnimation) {
+				this->lastAnimation->reset();
+			}
+			this->lastAnimation = this->animations[key];
+		}
+		this->animations[key]->play(dt);
+	}
+}
 
-	this->animations[key]->play(dt);
+void AnimationComponent::play(const std::string key, const float& dt, 
+	const float& modifier, const float& modifier_max, const bool priority)
+{
+	if (this->priorityAnimation) {
+		if (this->priorityAnimation == this->animations[key]) {
+			if (this->lastAnimation != this->animations[key]) {
+				if (this->lastAnimation) {
+					this->lastAnimation->reset();
+				}
+				this->lastAnimation = this->animations[key];
+			}
+			if (this->animations[key]->play(dt, abs(modifier / modifier_max))) {
+				this->priorityAnimation = nullptr;
+			}
+		}
+	}
+	else {
+		if (priority) {
+			this->priorityAnimation = this->animations[key];
+		}
+		if (this->lastAnimation != this->animations[key]) {
+			if (this->lastAnimation) {
+				this->lastAnimation->reset();
+			}
+			this->lastAnimation = this->animations[key];
+		}
+		this->animations[key]->play(dt, abs(modifier / modifier_max));
+	}
 }

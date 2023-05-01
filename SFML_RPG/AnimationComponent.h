@@ -34,7 +34,8 @@ private:
 		int width;
 		int height;
 
-		void play(const float& dt);
+		bool play(const float& dt);
+		bool play(const float& dt, float mod_percent);
 		void reset();
 	};
 
@@ -43,6 +44,7 @@ private:
 
 	std::map<std::string, Animation*> animations;
 	Animation* lastAnimation;
+	Animation* priorityAnimation;
 
 public:
 	AnimationComponent(sf::Sprite& sprite, sf::Texture& texture_sheet);
@@ -52,7 +54,9 @@ public:
 		int width, int height, int start_frame_x, int start_frame_y, 
 		int frames_x, int frames_y);
 
-	void play(const std::string key, const float& dt);
+	void play(const std::string key, const float& dt, const bool priority = false);
+	void play(const std::string key, const float& dt, const float& modifier, 
+		const float& modifier_max, const bool priority = false);
 };
 
 #endif // !ANIMATION_H

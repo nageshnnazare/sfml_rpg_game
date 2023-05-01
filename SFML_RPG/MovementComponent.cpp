@@ -62,6 +62,11 @@ const sf::Vector2f& MovementComponent::get_velocity() const
 	return this->velocity;
 }
 
+const float& MovementComponent::get_max_velocity() const
+{
+	return this->maxVelocity;
+}
+
 const bool MovementComponent::get_movement_state(MovementStates state) const
 {
 	switch (state) {
